@@ -30,7 +30,6 @@ public class StudyActivity extends BaseActivity {
     Button nextButton;
     FragmentManager fragmentManager = getFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    final FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_study;
@@ -59,11 +58,12 @@ public class StudyActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 word = DatabaseManager.getInstance(getApplication()).getRandomWord(topic.getId(),word.getId());
+                final FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
                 CardFragment nextCardFragment = new CardFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putSerializable("word",word);
                 nextCardFragment.setArguments(bundle1);
-                fragmentTransaction1.add(R.id.fragment,nextCardFragment);
+                fragmentTransaction1.replace(R.id.fragment,nextCardFragment);
                 fragmentTransaction1.commit();
             }
         });
