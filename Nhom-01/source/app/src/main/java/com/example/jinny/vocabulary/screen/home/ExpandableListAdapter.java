@@ -108,8 +108,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView txtListChild = convertView.findViewById(R.id.lblListItem);
         txtListChild.setText(topic.getName());
         final Intent intent = new Intent(context.getApplicationContext() , StudyActivity.class);
-        intent.putExtra("topicID",topic.getId());
-        intent.putExtra("topicName",topic.getName());
+        intent.putExtra("topic",topic);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

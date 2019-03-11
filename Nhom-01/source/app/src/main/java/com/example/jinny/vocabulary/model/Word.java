@@ -1,6 +1,8 @@
 package com.example.jinny.vocabulary.model;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
     private int id;
     private String origin;
     private String explaination;

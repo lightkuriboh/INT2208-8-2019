@@ -1,6 +1,10 @@
 package com.example.jinny.vocabulary.screen.study;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -11,8 +15,9 @@ import android.widget.TextView;
 import com.example.jinny.vocabulary.R;
 import com.example.jinny.vocabulary.base.BaseActivity;
 import com.example.jinny.vocabulary.database.DatabaseManager;
+import com.example.jinny.vocabulary.model.Topic;
 import com.example.jinny.vocabulary.model.Word;
-import com.squareup.picasso.Picasso;
+
 
 public class StudyActivity extends BaseActivity {
 
@@ -22,6 +27,10 @@ public class StudyActivity extends BaseActivity {
     Button button3, button4, button5;
     ImageView image;
     ImageButton imageButton2;
+    Button nextButton;
+    FragmentManager fragmentManager = getFragmentManager();
+    final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    final FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_study;
@@ -29,15 +38,46 @@ public class StudyActivity extends BaseActivity {
 
     @Override
     protected void setupUI() {
+        nextButton = findViewById(R.id.next_button);
         Intent intent = this.getIntent();
-        int topicID = intent.getIntExtra("topicID",0);
-        String topicName = intent.getStringExtra("topicName");
-        word = DatabaseManager.getInstance(this).getRandomWord(topicID,0);
+        final Topic topic = (Topic) intent.getSerializableExtra("topic");
+        word = DatabaseManager.getInstance(this).getRandomWord(topic.getId(),0);
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor(topic.getColor()));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("word",word);
 
-        image = (ImageView) findViewById(R.id.image);
-        Picasso.with(this).load(word.getImageUrl()).into(image);
+        CardFragment fragment = new CardFragment();
+        fragment.setArguments(bundle);
 
-        topicSpace = (Space) findViewById(R.id.topicSpace);
+        final CardBackFragment fragmentBack = new CardBackFragment();
+        fragmentBack.setArguments(bundle);
+
+        fragmentTransaction.add(R.id.fragment, fragment);
+        fragmentTransaction.commit();
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                word = DatabaseManager.getInstance(getApplication()).getRandomWord(topic.getId(),word.getId());
+                CardFragment nextCardFragment = new CardFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("word",word);
+                nextCardFragment.setArguments(bundle1);
+                fragmentTransaction1.add(R.id.fragment,nextCardFragment);
+                fragmentTransaction1.commit();
+            }
+        });
+
+        /*image = (ImageView) findViewById(R.id.image);
+        Picasso.with(this).load(word.getImageUrl()).into(image);*/
+
+
+        /*FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        CardFragment fragment = new CardFragment();
+        fragmentTransaction.add()*/
+
+        /*topicSpace = (Space) findViewById(R.id.topicSpace);
         collapseSpace = (TextView) findViewById(R.id.collapseSpace);
         extendSpace = (TextView) findViewById(R.id.extendSpace);
 
@@ -147,6 +187,6 @@ public class StudyActivity extends BaseActivity {
                 button5.setVisibility(View.GONE);
                 image.setVisibility(View.GONE);
             }
-        });
+        });*/
     }
 }
