@@ -30,7 +30,7 @@ https://docs.google.com/spreadsheets/d/1hRc_sCYV6-O9ELMNNB0Y8MQ25Xu6XZmCN_Gbc7jU
 
 ## HDSD (tài liệu HDSD, video HDSD, video DEMO)  
 Chúng tôi đã cung cấp tính năng hướng dẫn sử dụng trong ứng dụng. Vui lòng cài đặt file .apk bên ngoài để sử dụng.  
-Bên cạnh đó, chúng tôi đã quay một video demo bên ngoài.  
+Bên cạnh đó, chúng tôi đã quay một video demo bên ngoài. Hoặc [youtube](https://youtu.be/mxsDaexLDDg).
 
 ## Sprint Backlog  
 Đã viết chi tiết trong file SprintBacklog.md bên ngoài.  
